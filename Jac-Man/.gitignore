@@ -1,0 +1,35 @@
+# 빌드 결과물 제외
+*.obj
+*.exe
+*.log
+*.pdb
+*.idb
+*.tlog
+*.lastbuildstate
+*.ipch
+
+# 디버그/Release 폴더 제외
+Debug/
+Release/
+x64/
+*.recipe
+
+# Visual Studio 관련 파일 제외
+.vs/
+*.suo
+*.user
+*.filters
+*.VC.db
+*.VC.opendb
+*.sqlite
+
+# 임시 파일 및 시스템 파일 제외
+*.tmp
+*.log
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+# 특정 파일 제외
+Jac-Man/x64/
