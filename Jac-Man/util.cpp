@@ -18,3 +18,9 @@ void gotoxy(int x, int y) {
     pos.Y = y;
     SetConsoleCursorPosition(consoleHandle, pos);
 }
+
+// 텍스트 색상 설정
+void setcolor(int color) {
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(consoleHandle, color);
+}

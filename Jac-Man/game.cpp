@@ -48,22 +48,22 @@ void Game::init() const {
 }
 
 // 타이틀 출력
-void Game::titleDraw() const {
-    std::cout << "\n\n\n\n\n\n\n\n";
-    std::cout << "\t\t\t\t#####   #    ####       #   #   #   #   # \n";
-    std::cout << "\t\t\t\t  #    # #  #           ## ##  # #  ##  # \n";
-    std::cout << "\t\t\t\t  #   ##### #     ##### # # # ##### # # # \n";
-    std::cout << "\t\t\t\t# #   #   # #           #   # #   # #  ## \n";
-    std::cout << "\t\t\t\t #    #   #  ####       #   # #   # #   # \n";
+void Game::showTitle() const {
+    std::cout << "\n\n\n\n\n\n\n\n\n";
+    std::cout << "\t\t\t       #####   #    ####       #   #   #   #   # \n";
+    std::cout << "\t\t\t         #    # #  #           ## ##  # #  ##  # \n";
+    std::cout << "\t\t\t         #   ##### #     ##### # # # ##### # # # \n";
+    std::cout << "\t\t\t       # #   #   # #           #   # #   # #  ## \n";
+    std::cout << "\t\t\t        #    #   #  ####       #   # #   # #   # \n";
 }
 
 // 게임 정보 출력
-void Game::infoDraw() const {
+void Game::showInfo() const {
     system("cls");
-    std::cout << "\n\n\n\n\n\n\n\n\n\n\n";
-    std::cout << "\t\t\t\t\t\t[조작법]\n\n";
-    std::cout << "\t\t\t\t\t이동 : 방향키 이용\n";
-    std::cout << "\t\t\t\t\t선택 : 스페이스바 또는 엔터\n\n";
+    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+    std::cout << "\t\t\t\t\t       [조작법]\n\n";
+    std::cout << "\t\t\t\t         이동 : 방향키 이용\n";
+    std::cout << "\t\t\t\t     선택 : 스페이스바 또는 엔터";
     while (true) {
         if (keyControl() == KeyValue::SUBMIT) {
             break;
@@ -72,7 +72,7 @@ void Game::infoDraw() const {
 }
 
 // 메뉴 출력 및 입력
-int Game::menuDraw() const {
+int Game::showMenu() const {
     int x = 45, y = START_Y;
 
     // 메뉴 표시
@@ -95,51 +95,34 @@ int Game::menuDraw() const {
 
 }
 
-// 맵 난이도 선택
-int  Game::maplistDraw() const {
-    int x = 48, y = MAP_START_Y;
-
+// 로딩 화면
+void Game::loading(int q, int p) {
+    int x = 39, y = 13;
     system("cls");
-    std::cout << "\n\n\n\n\n\n\n\n\n\n\n";
-    std::cout << "\t\t\t\t\t      [맵 선택]\n\n";
-
-    gotoxy(x - 2, y);
-    std::cout << "> ";
-    gotoxy(x, MAP_START_Y);
-    std::cout << "쉬  움";
-    gotoxy(x, MAP_START_Y + 1);
-    std::cout << "어려움";
-    gotoxy(x, MAP_START_Y + 2);
-    std::cout << "뒤  로";
-
-    while (true) {
-        KeyValue key = keyControl();
-        moveCursor(x, y, key, MAP_START_Y, MAP_START_Y + 2);
-        if (key == KeyValue::SUBMIT) {
-            return y - MAP_START_Y;
-        }
-    }
-
+    gotoxy(x, y);
+    for (int i = 0; i <= q; i++)
+        std::cout << "■";
+    for (int i = 0; i <= p; i++)
+        std::cout << "□";
+    gotoxy(x, y + 2);
+    std::cout << "\t       loading...";
+    Sleep(100);
+    system("cls");
 }
 
 // 게임 실행
 void Game::run() {
     while (true) {
-        titleDraw();
-        int menuCode = menuDraw();
+        showTitle();
+        int menuCode = showMenu();
         if (menuCode == 0) {    // 게임 시작
-            int n = maplistDraw();
-
-            if (n == 0) {   // 쉬움
-                std::cout << "난이도 쉬움을 선택하셨습니다.";
-                Sleep(1000);
-            } else if (n == 1) {  // 어려움
-                std::cout << "난이도 어려움을 선택하셨습니다.";
-                Sleep(1000);
-            }
+            for (int i = 0; i < 10; i++)
+                loading(i, 10-i);
+            gameMap.drawMap();
+            Sleep(5000);
         }
         else if (menuCode == 1) {   // 게임 정보
-            infoDraw(); 
+            showInfo(); 
         }
         else if (menuCode == 2) {   // 종료
             return; 
