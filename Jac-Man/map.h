@@ -14,7 +14,14 @@ private:
 public:
     Map();
     void drawMap() const;       // 맵 출력 함수
-    bool isWall(int x, int y) const; // 특정 좌표가 벽인지 확인
+    bool isWall(int x, int y) const;    // 특정 좌표가 벽인지 확인
+
+    void setTile(int x, int y, int value); // 특정 위치의 타일 값을 설정
+    int getTile(int x, int y) const;       // 특정 위치의 타일 값을 가져옴
+
+    int getCols() const { return COLS; }
+    int getRows() const { return ROWS; }
+
 };
 
 #endif // MAP_H

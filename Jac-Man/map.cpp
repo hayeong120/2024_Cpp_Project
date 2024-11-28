@@ -53,7 +53,7 @@ void Map::drawMap() const {
                 std::cout << "●";
                 break;
             case 4: // 출입구/포탈
-                std::cout << "◆";
+                std::cout << "  ";
                 break;
             default: // 알 수 없는 값
                 std::cout << "??";
@@ -71,3 +71,19 @@ bool Map::isWall(int x, int y) const {
     }
     return map[y][x] == 1;
 }
+
+// 특정 위치의 타일 값을 설정
+void Map::setTile(int x, int y, int value) {
+    if (x >= 0 && x < COLS && y >= 0 && y < ROWS) {
+        map[y][x] = value;
+    }
+}
+
+// 특정 위치의 타일 값을 가져옴
+int Map::getTile(int x, int y) const {
+    if (x >= 0 && x < COLS && y >= 0 && y < ROWS) {
+        return map[y][x];
+    }
+    return -1; // 맵 외곽에 대한 기본값
+}
+
