@@ -1,4 +1,5 @@
 ﻿#include "map.h"
+#include <algorithm>
 
 Map::Map() {
 	int tempMap[ROWS][COLS] = {
@@ -28,15 +29,17 @@ Map::Map() {
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     };
 
-    // 맵 데이터 복사
-    for (int i = 0; i < ROWS; ++i)
-        for (int j = 0; j < COLS; ++j)
-            map[i][j] = tempMap[i][j];
+    std::copy(&tempMap[0][0], &tempMap[0][0] + ROWS * COLS, &map[0][0]);
+}
+
+// 경계 검사 함수
+bool Map::isWithinBounds(int x, int y) const {
+    return x >= 0 && x < COLS && y >= 0 && y < ROWS;
 }
 
 // 맵 그리기 
-void Map::drawMap() const {
-    gotoxy(4, 3);
+void Map::drawMap(int startX = 4, int startY = 3) const {
+    gotoxy(startX, startY); // 시작 위치
     for (int i = 0; i < ROWS; ++i) {
         for (int j = 0; j < COLS; ++j) {
             switch (map[i][j]) {
@@ -65,25 +68,17 @@ void Map::drawMap() const {
     }
 }
 
+
 bool Map::isWall(int x, int y) const {
-    if (x < 0 || x >= COLS || y < 0 || y >= ROWS) {
-        return true; // 맵 외곽은 벽으로 처리
-    }
-    return map[y][x] == 1;
+    return !isWithinBounds(x, y) || map[y][x] == 1;
 }
 
-// 특정 위치의 타일 값을 설정
 void Map::setTile(int x, int y, int value) {
-    if (x >= 0 && x < COLS && y >= 0 && y < ROWS) {
+    if (isWithinBounds(x, y)) {
         map[y][x] = value;
     }
 }
 
-// 특정 위치의 타일 값을 가져옴
 int Map::getTile(int x, int y) const {
-    if (x >= 0 && x < COLS && y >= 0 && y < ROWS) {
-        return map[y][x];
-    }
-    return -1; // 맵 외곽에 대한 기본값
+    return isWithinBounds(x, y) ? map[y][x] : -1;
 }
-
